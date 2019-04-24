@@ -53,9 +53,9 @@ elif [ "$SES_USER" -a "$SES_PASSWORD" ]; then
 # SMARTHOST_ADDRESS, SMARTHOST_PORT: connection parameters.
 elif [ "$SMARTHOST_ADDRESS" ] ; then
 	opts+=(
-		dc_eximconfig_configtype 'smarthost'
+		dc_eximconfig_configtype 'internet'
 		dc_smarthost "${SMARTHOST_ADDRESS}::${SMARTHOST_PORT-25}"
-		dc_relay_domains "${RELAY_DOMAINS}"
+		dc_local_domains="${SMARTHOST_ADDRESS}"
 	)
 	rm -f /etc/exim4/passwd.client
 	if [ "$SMARTHOST_ALIASES" -a "$SMARTHOST_USER" -a "$SMARTHOST_PASSWORD" ] ; then
