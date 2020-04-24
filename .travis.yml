@@ -12,7 +12,7 @@ before_install:
 - pip install docker-compose --upgrade
 - docker-compose --version
 install:
-- COMPOSE_DOCKER_CLI_BUILD=1 docker build -t trydirect/smtp:latest
+- COMPOSE_DOCKER_CLI_BUILD=1 docker build . -t trydirect/smtp:latest
 before_script:
 - pip install requests
 - pip install docker
