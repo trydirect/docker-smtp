@@ -1,0 +1,28 @@
+language: python
+python:
+- 2.7
+env:
+  matrix:
+    - DOCKER_CONTENT_TRUST=0
+services:
+- docker
+before_install:
+- sudo apt-get update
+- docker-compose --version
+- pip install docker-compose --upgrade
+- docker-compose --version
+install:
+- COMPOSE_DOCKER_CLI_BUILD=1 docker build -t trydirect/smtp:latest
+before_script:
+- pip install requests
+- pip install docker
+- cd $TRAVIS_BUILD_DIR
+script:
+- bash ./.travis/linters.sh
+notifications:
+  slack:
+    rooms:
+    - optimum-team:GycletOWK4Kt95GktwYwfUMp#build
+after_success:
+- echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+- docker push trydirect/smtp:latest
